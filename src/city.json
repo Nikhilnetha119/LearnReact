@@ -1,0 +1,50 @@
+[
+    {
+        "id" : "1",
+        "name" : "Hyderabad"
+    },
+    {
+        "id" : "2",
+        "name" : "Vizag"
+    },
+    {
+        "id" : "3",
+        "name" : "Bengaluru"
+    },
+    {
+        "id" : "4",
+        "name" : "Chennai"
+    },
+    {
+        "id" : "5",
+        "name" : "Pune"
+    },
+    {
+        "id" : "6",
+        "name" : "Mumbai"
+    },
+    {
+        "id" : "7",
+        "name" : "Lucknow"
+    },
+    {
+        "id" : "8",
+        "name" : "Noida"
+    },
+    {
+        "id" : "9",
+        "name" : "Haryana"
+    },
+    {
+        "id" : "10",
+        "name" : "Srinagar"
+    },
+    {
+        "id" : "11",
+        "name" : "Delhi"
+    },
+    {
+        "id" : "12",
+        "name" : "Gujarat"
+    }
+]
