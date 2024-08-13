@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import Data from './city.json';
+import React, { useEffect, useRef } from 'react';
 
 const App = () => {
-  const[search, setSearch] = useState('');
+  const data = useRef(null)
+  const submitHandler = e => {
+    e.preventDefault();
+    console.log(data.current.value)
+  }
+  useEffect(() => {
+    data.current.focus();
+  },[])
   return (
-    <div>
+    <div >
       <center>
-        <h2>Enter your City Name: </h2>
-        <input type='text'  value={search} onChange={(e) => setSearch(e.target.value)} />
-        {Data.filter
-          (city => city.name.toLowerCase().includes(search.toLowerCase()))
-          .map(city => 
-            <div style={{padding:'10px', margin:'10px', border: '1px solid black',  maxWidth:'70%'}}>
-              {city.name}
-            </div>
-        )}
+        <form onSubmit={submitHandler}>
+          <input ref={data} type='text' placeholder='Enter your name'></input> <br></br>
+          <input type='submit'></input>
+        </form>
       </center>
     </div>
   )
