@@ -1,21 +1,37 @@
-import React, { useEffect, useRef } from 'react';
+import React,{useState} from 'react'
+import TodoList from './Todolist';
+import './App.css';
 
 const App = () => {
-  const data = useRef(null)
-  const submitHandler = e => {
-    e.preventDefault();
-    console.log(data.current.value)
+  const [task,setTask] = useState("");
+  const [todos,setTodos] = useState([]);
+
+  const changeHandler = e =>{
+    setTask(e.target.value)
   }
-  useEffect(() => {
-    data.current.focus();
-  },[])
+  const submitHandler = e =>{
+    e.preventDefault();
+    const newTodos = [...todos,task];
+    setTodos(newTodos);
+    setTask("");
+  }
+  const deleteHandler = (indexValue) =>{
+    const newTodos = todos.filter((todo,index) => index !== indexValue);
+    setTodos(newTodos);
+  }
   return (
-    <div >
+    <div>
       <center>
-        <form onSubmit={submitHandler}>
-          <input ref={data} type='text' placeholder='Enter your name'></input> <br></br>
-          <input type='submit'></input>
-        </form>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Todo Management Application</h5>
+            <form onSubmit={submitHandler}>
+              <input type="text" name="task" value={task} onChange={changeHandler} /> &nbsp;&nbsp;
+              <input type="submit" value="Add" name="Add"/>
+            </form>
+            <TodoList todolist={todos} deleteHandler={deleteHandler}/>
+          </div>
+        </div>
       </center>
     </div>
   )
