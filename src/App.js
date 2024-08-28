@@ -1,37 +1,52 @@
 import React, { useState } from 'react';
-import Products from './Products';
-import './App.css';  
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import './App.css';  // Import the CSS file
 
-const App = () => {
-  const [search, setSearch] = useState('');
-  const [data, setData] = useState([]);
-  const YOUR_APP_ID = "4852ece1";
-  const YOUR_APP_KEY = "8883229bb7e0e90fecedb05bd7cc06e4";
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+};
 
-  const submitHandler = e => {
-    e.preventDefault();
-    fetch(`https://api.edamam.com/search?q=${search}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=30&calories=591-722&health=alcohol-free`)
-      .then(response => response.json())
-      .then(data => setData(data.hits));
+const center = {
+  lat: -3.745,
+  lng: -38.523
+};
+
+const MapContainer = () => {
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const onMarkerClick = () => {
+    setSelectedPlace({ name: 'Current location' });
+  };
+
+  const onInfoWindowClose = () => {
+    setSelectedPlace(null);
   };
 
   return (
-    <div>
-      <center>
-        <h1>Food Recipe App</h1>
-        <form onSubmit={submitHandler}>
-          <input 
-            type="text" 
-            value={search} 
-            onChange={(e) => setSearch(e.target.value)} 
-            placeholder="Search for a recipe..." 
-          /><br /><br />
-          <input type="submit" className="btn btn-primary" value="Search" />
-        </form>
-        {data.length >= 1 ? <Products data={data} /> : <h3>No Results Found</h3>}
-      </center>
-    </div>
+    <LoadScript googleMapsApiKey="AIzaSyABwRiwm5ZilflHCqcpCPqmdmLw-Tj_4M0">
+      <div className="map-container">  {/* Apply the CSS class */}
+        <h2>Google Map</h2>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={14}
+        >
+          <Marker
+            position={center}
+            onClick={onMarkerClick}
+          />
+          {selectedPlace && (
+            <InfoWindow position={center} onCloseClick={onInfoWindowClose}>
+              <div className="info-window">  {/* Apply the CSS class */}
+                <h1>{selectedPlace.name}</h1>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </div>
+    </LoadScript>
   );
-}
+};
 
-export default App;
+export default MapContainer;
